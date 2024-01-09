@@ -65,7 +65,7 @@ export class SearcherService {
       method: 'getEmpresasAgrupadasBanderasCombustible',
       banderas: banderas,
       combustible: combustible,
-      bounds: this.generarBoundingBox(geo.lat, geo.lon, 0.5)
+      bounds: this.generarBoundingBox(geo.lat, geo.lon, 5)
     };
 
     console.log(data);
