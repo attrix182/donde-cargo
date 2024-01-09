@@ -12,16 +12,47 @@ export class SearcherComponent implements AfterViewInit {
   @Input() error!: string;
   @ViewChild('inputAddress') inputAddress;
 
-  combustibles;
+  results;
 
-  searchValue!: string;
   address!: string;
   addressText!: string;
   geo;
   locationError = '';
   loading: boolean = false;
 
+  tipoCombustible = [
+    {
+      id: 19,
+      name: 'Diesel'
+    },
+    {
+      id: 21,
+      name: 'Diesel Premium'
+    },
+    {
+      id: 6,
+      name: 'GNC'
+    },
+    {
+      id: 3,
+      name: 'Nafta Premium'
+    },
+    {
+      id: 2,
+      name: 'Nafta Súper'
+    }
+
+  ]
+
+  tipoSeleccionado = this.tipoCombustible[4];
+
   constructor(private router: Router, private searcherSVC: SearcherService, private http: HttpClient) {}
+
+  seleccionarCombustible(combustible) {
+    if(combustible.id == this.tipoSeleccionado.id) return;
+    this.tipoSeleccionado = combustible;
+    this.results = [];
+  }
 
   getAddress() {
     this.loading = true;
@@ -92,10 +123,10 @@ export class SearcherComponent implements AfterViewInit {
 
   search() {
     this.searcherSVC
-      .getEmpresasAgrupadasBanderasCombustible(['2', '4'], 2, this.geo)
+      .getEmpresasAgrupadasBanderasCombustible(['2', '4'], this.tipoSeleccionado.id, this.geo)
       .subscribe((res) => {
         console.log(res);
-        this.combustibles = res;
+        this.results = res;
       });
   }
 }

@@ -32,15 +32,24 @@
         <div class="address">
           <div *ngIf="addressText">
             <span>Ubicación actual:</span>
-            <div class="address-text" [title]="addressText">{{ addressText | slice:0:55 }}...</div>
+            <div class="address-text" [title]="addressText">{{ addressText | slice : 0 : 55 }}...</div>
 
             <div class="container-results">
-              <div style="margin: auto;">
-                <button (click)="search()" mat-raised-button>Buscar precio</button>
+
+              <div class="tipo-combustibles">
+                <div *ngFor="let combustible of tipoCombustible">
+                  <button mat-raised-button [color]="tipoSeleccionado.id === combustible.id ? 'primary' : ''" (click)="seleccionarCombustible(combustible)">
+                   {{ combustible.name }}
+                  </button>
+                </div>
               </div>
 
-              <section class="results" *ngIf="combustibles">
-                <div *ngFor="let result of combustibles.resultado">
+              <div style="margin: auto; margin-top: 15px;">
+                <button color="primary" (click)="search()" mat-flat-button>Buscar precio</button>
+              </div>
+
+              <section class="results" *ngIf="results">
+                <div *ngFor="let result of results.resultado">
                   <app-result-card class="center" [result]="result"></app-result-card>
                 </div>
               </section>
