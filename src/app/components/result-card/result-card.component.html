@@ -1,0 +1,26 @@
+<div class="card">
+  <img [src]="result.img" class="card-img-top" alt="Imagen de la estación" />
+  <div class="card-body">
+    <h5 class="card-title">{{ result.razonsocial }}</h5>
+    <p class="card-subtitle mb-2 text-muted">{{ result.localidad }}, {{ result.provincia }}</p>
+    <p class="card-text">Dirección: {{ result.direccion }}</p>
+
+    <div *ngFor="let precio of getPrecios(result.precios)" class="mb-2">
+      <p class="card-text">Horario: {{ precio.tipohorario }}</p>
+
+      <p class="card-text">Precio: ${{ precio.precio }}</p>
+      <p class="card-text">Ultima actualización: {{ precio.fechavigencia }}</p>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <a
+      mat-raised-button
+      color="primary"
+      target="_blank"
+      [href]="'https://www.google.com/maps/search/?api=1&query=' + result.direccion + ',' + result.localidad"
+    >
+      ¿Como llegar?</a
+    >
+  </div>
+</div>

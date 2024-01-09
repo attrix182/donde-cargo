@@ -1,44 +1,46 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearcherService } from '../services/searcher.service';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-searcher',
   templateUrl: './searcher.component.html',
-  styleUrls: ['./searcher.component.css'],
+  styleUrls: ['./searcher.component.scss']
 })
-export class SearcherComponent {
-  @Output() closeModal = new EventEmitter();
+export class SearcherComponent implements AfterViewInit {
   @Input() error!: string;
-  @ViewChild('inputAddress') inputAddress: any;
+  @ViewChild('inputAddress') inputAddress;
+
+  combustibles;
 
   searchValue!: string;
   address!: string;
   addressText!: string;
-  geo: any;
+  geo;
   locationError = '';
   loading: boolean = false;
 
-  constructor(private router: Router, private searcherSVC: SearcherService) {}
-
-  close() {
-    this.closeModal.emit();
-  }
-  ngOnInit(): void {}
+  constructor(private router: Router, private searcherSVC: SearcherService, private http: HttpClient) {}
 
   getAddress() {
     this.loading = true;
-    this.searcherSVC.geocodeAddress(this.address).subscribe(
-      (res: any) => {
+    this.searcherSVC.geocodeAddress(this.address).subscribe({
+      next: (res) => {
         this.geo = res[0];
         this.searcherSVC.setGeo(this.geo);
-        this.addressText = res[0].display_name;
-        this.loading = false;
+        this.searcherSVC.getNameAddress(this.geo.lat, this.geo.lon).subscribe((res) => {
+          this.addressText = res.display_name;
+
+          this.loading = false;
+        });
       },
-      (error) => {
+      error: (error) => {
+        console.log(error);
         this.loading = false;
       }
+    }
+
     );
   }
 
@@ -49,9 +51,9 @@ export class SearcherComponent {
         this.geo = { lat: position.coords.latitude, lon: position.coords.longitude };
         this.searcherSVC.setGeo(this.geo);
         this.searcherSVC.getNameAddress(this.geo.lat, this.geo.lon).subscribe(
-          (res: any) => {
+          (res) => {
             this.addressText = res.display_name;
-            this.inputAddress.nativeElement.placeholder = this.addressText;
+
             this.loading = false;
           },
           (error) => {
@@ -77,12 +79,23 @@ export class SearcherComponent {
   ngAfterViewInit() {
     this.geo = this.searcherSVC.getStoredGeo();
     if (this.geo) {
-      this.searcherSVC.getNameAddress(this.geo.lat, this.geo.lon).subscribe((res: any) => {
+      this.searcherSVC.getNameAddress(this.geo.lat, this.geo.lon).subscribe((res) => {
         this.addressText = res.display_name;
-        this.inputAddress.nativeElement.placeholder = this.addressText;
+
       });
     } else {
       this.getLocalAddress();
     }
   }
- }
+
+
+
+  search() {
+    this.searcherSVC
+      .getEmpresasAgrupadasBanderasCombustible(['2', '4'], 2, this.geo)
+      .subscribe((res) => {
+        console.log(res);
+        this.combustibles = res;
+      });
+  }
+}

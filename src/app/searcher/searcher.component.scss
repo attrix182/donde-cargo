@@ -1,0 +1,135 @@
+.modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(120, 116, 116);
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.modal-content {
+  background-color: rgb(120, 116, 116);
+  color: white;
+  padding: 25px;
+  border-radius: 4px;
+  width: 580px;
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #000000;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.title {
+  text-align: center;
+  padding: 10px;
+}
+
+.loader_container {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.address-text {
+  padding: 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.apply-button {
+  cursor: pointer;
+  background-color: #2e4faa;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  height: 2rem;
+  &:hover {
+    box-shadow: 0 1px 10px rgba(15, 15, 15, 0.28);
+  }
+}
+
+.location {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.navbar {
+  padding: 10px;
+  span {
+    font-weight: 450;
+  }
+  &__location {
+    width: 100%;
+    .searchbar {
+      width: 100%;
+      margin-top: 5px;
+      display: inline-flex;
+      gap: 15px;
+      justify-content: center;
+
+      &-input {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #dfe1e5;
+        background-color: white;
+      }
+
+      &-button {
+        padding: 5px;
+        border: 1px solid #dfe1e5;
+        background-color: white;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.address {
+  padding: 2px;
+  margin-top: 17px;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-content {
+    width: 350px;
+  }
+}
+
+.container-results {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  button {
+    margin: auto;
+  }
+}
+
+.results {
+  display: flex;
+  gap: 10px;
+  overflow-y: auto;
+  flex-direction: column;
+  height: 500px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
