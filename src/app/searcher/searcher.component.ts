@@ -190,7 +190,7 @@ export class SearcherComponent implements AfterViewInit {
 
   search() {
     this.searcherSVC
-      .getEmpresasAgrupadasBanderasCombustible(['2', '4'], this.tipoSeleccionado.id, this.geo)
+      .getEmpresasAgrupadasBanderasCombustible([17, 26, 1, 21, 6, 3, 29, 24, 27, 20, 28, 8, 4, -1, 7, 30, 2], this.tipoSeleccionado.id, this.geo)
       .subscribe((res) => {
         console.log(res);
         this.results = res;

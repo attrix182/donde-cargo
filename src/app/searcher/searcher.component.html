@@ -7,46 +7,51 @@
           <h3 style="color: black;">Promociones: </h3>
         </mat-card-header>
         <mat-card-content>
-          <a class="btn-modo" href="https://www.modo.com.ar/promos?search_text=combustible" target="_blank">
-          Ver en: <img src="assets/img/modo.webp"  height="20px">
+          <div class="btn-promos">
+
+
+          <a mat-raised-button color="primary"  href="https://www.modo.com.ar/promos?search_text=combustible" target="_blank">
+          Ver en <img src="assets/img/modo.webp"  height="20px">
         </a>
 
-          <a class="btn-modo" href="https://www.santander.com.ar/banco/online/compras/ypf-superclub-mas/!ut/p/z1/jZDLDoIwEEW_xQVLmAZf6I6wMQJBI0TsxhRTCkmhTSkS_XobXZn4YHYzOffemQEMOeCWXGtGdC1awk1_wotzsnKDjeuhJNllS7QPZ5tVnKSH0FvA8QmgL-UjwGP0PwD82377L8Bc4Ko4iBlgSXRl120pIL_J0u56SdWF94XdkM4sgkdkMS6K11v8tph6xlTRkiqqnF6ZcaW17NYWstAwDA4TgnHqXERjoU-SSnQa8ncSZJPl96hM5_wa-f5k8gBLV88Y/#?buscar=combustible" target="_blank">
-          Ver en: <img src="assets/img/santander.png"  height="20px">
+          <a mat-raised-button color="primary" href="https://www.santander.com.ar/banco/online/compras/ypf-superclub-mas/!ut/p/z1/jZDLDoIwEEW_xQVLmAZf6I6wMQJBI0TsxhRTCkmhTSkS_XobXZn4YHYzOffemQEMOeCWXGtGdC1awk1_wotzsnKDjeuhJNllS7QPZ5tVnKSH0FvA8QmgL-UjwGP0PwD82377L8Bc4Ko4iBlgSXRl120pIL_J0u56SdWF94XdkM4sgkdkMS6K11v8tph6xlTRkiqqnF6ZcaW17NYWstAwDA4TgnHqXERjoU-SSnQa8ncSZJPl96hM5_wa-f5k8gBLV88Y/#?buscar=combustible" target="_blank">
+          Ver en <img src="assets/img/santander.png"  height="20px">
         </a>
+      </div>
         </mat-card-content>
       </mat-card>
     </div>
-    <div class="location">
-      <button mat-raised-button color="primary" (click)="getLocalAddress()" *ngIf="!error">Detectar ubicación</button>
-    </div>
     <hr />
     <div class="navbar">
+
       <span>Ubicación personalizada:</span>
       <div class="navbar__location">
         <div class="searchbar">
           <input
-            type="text"
-            class="searchbar-input"
-            maxlength="2048"
-            autocomplete="off"
-            [(ngModel)]="address"
-            (keydown.enter)="getAddress()"
-            placeholder="Calle 1234, Barrio..."
+          type="text"
+          class="searchbar-input"
+          maxlength="2048"
+          autocomplete="off"
+          [(ngModel)]="address"
+          (keydown.enter)="getAddress()"
+          placeholder="Calle 1234, Barrio..."
           />
           <button
-            style="color: black !important"
-            [disabled]="!address"
-            mat-raised-button
-            color="accent"
-            class="searchbar-button"
-            (click)="getAddress()"
+          style="color: black !important"
+          [disabled]="!address"
+          mat-raised-button
+          color="accent"
+          class="searchbar-button"
+          (click)="getAddress()"
           >
-            Buscar
-          </button>
-        </div>
+          Buscar
+        </button>
+      </div>
 
-        <div class="address">
+      <div class="address">
+          <div class="location">
+            <button mat-raised-button color="primary" (click)="getLocalAddress()" *ngIf="!error">Detectar ubicación automatica</button>
+          </div>
           <div *ngIf="addressText">
             <span>Ubicación actual:</span>
             <div class="address-text" [title]="addressText">{{ addressText | slice : 0 : 55 }}...</div>
