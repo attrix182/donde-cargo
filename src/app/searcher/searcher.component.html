@@ -1,5 +1,22 @@
 <div class="modal">
   <div class="modal-content">
+
+    <div class="promos">
+      <mat-card>
+        <mat-card-header>
+          <h3 style="color: black;">Promociones: </h3>
+        </mat-card-header>
+        <mat-card-content>
+          <a class="btn-modo" href="https://www.modo.com.ar/promos?search_text=combustible" target="_blank">
+          Ver en: <img src="assets/img/modo.webp"  height="20px">
+        </a>
+
+          <a class="btn-modo" href="https://www.santander.com.ar/banco/online/compras/ypf-superclub-mas/!ut/p/z1/jZDLDoIwEEW_xQVLmAZf6I6wMQJBI0TsxhRTCkmhTSkS_XobXZn4YHYzOffemQEMOeCWXGtGdC1awk1_wotzsnKDjeuhJNllS7QPZ5tVnKSH0FvA8QmgL-UjwGP0PwD82377L8Bc4Ko4iBlgSXRl120pIL_J0u56SdWF94XdkM4sgkdkMS6K11v8tph6xlTRkiqqnF6ZcaW17NYWstAwDA4TgnHqXERjoU-SSnQa8ncSZJPl96hM5_wa-f5k8gBLV88Y/#?buscar=combustible" target="_blank">
+          Ver en: <img src="assets/img/santander.png"  height="20px">
+        </a>
+        </mat-card-content>
+      </mat-card>
+    </div>
     <div class="location">
       <button mat-raised-button color="primary" (click)="getLocalAddress()" *ngIf="!error">Detectar ubicación</button>
     </div>
@@ -44,7 +61,19 @@
                 </div>
               </div>
 
-              <div style="margin: auto; margin-top: 15px;">
+<!--               <div class="listado-banderas">
+                <div *ngFor="let bandera of banderas">
+                  radio
+                  <input
+                    type="checkbox"
+                    [value]="bandera"
+                    [checked]="banderasSeleccionadas.includes(bandera)"
+                    (change)="toggle(bandera)"
+                    [(ngModel)]="banderaSeleccionada"
+                  />
+              </div> -->
+
+              <div style="margin: auto; margin-top: 15px; margin-bottom: 5px;">
                 <button color="primary" (click)="search()" mat-flat-button>Buscar precio</button>
               </div>
 

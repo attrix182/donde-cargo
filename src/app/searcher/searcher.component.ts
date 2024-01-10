@@ -1,7 +1,13 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearcherService } from '../services/searcher.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatChipInputEvent } from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { FormControl } from '@angular/forms';
+import { MatAutocomplete } from '@angular/material/autocomplete';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+
 
 @Component({
   selector: 'app-searcher',
@@ -44,9 +50,70 @@ export class SearcherComponent implements AfterViewInit {
 
   ]
 
+  banderas = [
+    {"id": 17, "name": "ASPRO"},
+    {"id": 26, "name": "AXION"},
+    {"id": 1, "name": "BLANCA"},
+    {"id": 21, "name": "CAMUZZI GAS DEL SUR"},
+    {"id": 6, "name": "DAPSA S.A."},
+    {"id": 3, "name": "ESSO PETROLERA ARGENTINA S.R.L"},
+    {"id": 29, "name": "GULF"},
+    {"id": 24, "name": "OIL COMBUSTIBLES S.A."},
+    {"id": 27, "name": "PAMPA ENERGIA"},
+    {"id": 20, "name": "PETROBRAS"},
+    {"id": 28, "name": "PUMA"},
+    {"id": 8, "name": "REFINOR"},
+    {"id": 4, "name": "SHELL C.A.P.S.A."},
+    {"id": -1, "name": "SIN EMPRESA BANDERA"},
+    {"id": 7, "name": "SOL PETROLEO"},
+    {"id": 30, "name": "VOY"},
+    {"id": 2, "name": "YPF"}
+  ]
+
+  banderasSeleccionadas: any[] = []
+
+
   tipoSeleccionado = this.tipoCombustible[4];
+  banderasControl = new FormControl();
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+
+  @ViewChild('banderaInput') banderaInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete!: MatAutocomplete;
 
   constructor(private router: Router, private searcherSVC: SearcherService, private http: HttpClient) {}
+
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our bandera
+    if ((value || '').trim()) {
+      this.banderasSeleccionadas.push({ id: -1, name: value.trim() });
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.banderasControl.setValue(null);
+  }
+
+  remove(bandera: any): void {
+    const index = this.banderasSeleccionadas.indexOf(bandera);
+
+    if (index >= 0) {
+      this.banderasSeleccionadas.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.banderasSeleccionadas.push(event.option.value);
+    this.banderaInput.nativeElement.value = '';
+    this.banderasControl.setValue(null);
+  }
 
   seleccionarCombustible(combustible) {
     if(combustible.id == this.tipoSeleccionado.id) return;
